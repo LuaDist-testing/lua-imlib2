@@ -14,12 +14,10 @@ OBJS= limlib2.o
 
 SOS= limlib2.so
 
-LIBFLAG= -shared
-
 all: limlib2.so
 
 limlib2.so: $(OBJS)
-	$(CC) -o $@ $(LIBFLAG) $(OBJS) $(LIBS)
+	$(CC) -o $@ -shared $(OBJS) $(LIBS)
 
 .PHONY: clean doc test
 clean:

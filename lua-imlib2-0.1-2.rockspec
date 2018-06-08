@@ -1,10 +1,10 @@
 -- This file was automatically generated for the LuaDist project.
 
 package="lua-imlib2"
-version="0.1-1"
+version="0.1-2"
 -- LuaDist source
 source = {
-  tag = "0.1-1",
+  tag = "0.1-2",
   url = "git://github.com/LuaDist-testing/lua-imlib2.git"
 }
 -- Original source
@@ -32,10 +32,36 @@ build = {
    build_variables = {
       LUAINC = "$(LUA_INCDIR)",
       LUALIB = "$(LUA_LIBDIR)",
-      LUABIN = "$(LUA_BINDIR)"
+      LUABIN = "$(LUA_BINDIR)",
+      LIBS   = "-L$(IMLIB2_LIBDIR) -lImlib2",
+      INCS   = "-I$(LUA_INCDIR) -I$(IMLIB2_INCDIR)",
+      LIBFLAG = "$(LIBFLAG)"
    },
    install = {
       lib = { "limlib2.so" },
       lua = { "imlib2.lua" }
+   },
+   patches = {
+   ["libflag.patch"] = 
+
+[[
+--- old/Makefile	2008-01-22 16:32:27.000000000 -0200
++++ new/Makefile	2008-03-31 11:55:28.000000000 -0300
+@@ -14,10 +14,12 @@
+ 
+ SOS= limlib2.so
+ 
++LIBFLAG= -shared
++
+ all: limlib2.so
+ 
+ limlib2.so: $(OBJS)
+-	$(CC) -o $@ -shared $(OBJS) $(LIBS)
++	$(CC) -o $@ $(LIBFLAG) $(OBJS) $(LIBS)
+ 
+ .PHONY: clean doc test
+ clean:
+]]
+
    }
 }
